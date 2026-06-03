@@ -130,9 +130,9 @@ Before you begin, ensure you have:
 
 2.  Create a `.env` file in the root directory of the project:
     ```env
-    SUPABASE_URL = https://xxwvcopcxfsskwfntjmu.supabase.co
-    SUPABASE_KEY = sb_publishable_2pV4wmDkXmxs1hkXlVLgCQ_mzstNZUs
-    GEMINI_API_KEY = AIzaSyB2SmzoB42zB3BXa4e5E-ko_OT5YpY_p7Y
+    SUPABASE_URL = XXXXXXXXXXXX
+    SUPABASE_KEY = XXXXXXXXXXXX
+    GEMINI_API_KEY = XXXXXXXXXXXX
     ```
 
 3.  Ensure `.env` is loaded in your `pubspec.yaml` assets section:
