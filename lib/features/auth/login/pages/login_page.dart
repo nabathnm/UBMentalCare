@@ -4,7 +4,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/utils/constant/app_colors.dart';
 import '../../register/pages/register_page.dart';
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -17,7 +16,6 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   bool _isLoading = false;
   bool _obscurePassword = true;
-
 
   Future<void> _login() async {
     try {
@@ -32,7 +30,9 @@ class _LoginPageState extends State<LoginPage> {
       // Validasi domain email
       if (!email.endsWith('@student.ub.ac.id') &&
           !email.endsWith('@psychologist.ub.ac.id')) {
-        throw Exception('Email harus menggunakan domain UB (@student.ub.ac.id atau @psychologist.ub.ac.id)');
+        throw Exception(
+          'Email harus menggunakan domain UB (@student.ub.ac.id atau @psychologist.ub.ac.id)',
+        );
       }
 
       await Supabase.instance.client.auth.signInWithPassword(
@@ -137,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.03),
+                        color: Colors.black.withValues(alpha: 0.03),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),
@@ -147,7 +147,8 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       _buildTextField(
                         controller: _emailController,
-                        hint: 'Email (@student.ub.ac.id / @psychologist.ub.ac.id)',
+                        hint:
+                            'Email (@student.ub.ac.id / @psychologist.ub.ac.id)',
                         icon: Icons.email_outlined,
                         keyboardType: TextInputType.emailAddress,
                       ),
@@ -194,32 +195,32 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 32),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Belum punya akun? ',
-                        style: TextStyle(color: Colors.grey.shade600),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const RegisterPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Daftar di sini',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primary,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Belum punya akun? ',
+                      style: TextStyle(color: Colors.grey.shade600),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RegisterPage(),
                           ),
+                        );
+                      },
+                      child: const Text(
+                        'Daftar di sini',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -227,8 +228,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-
 
   Widget _buildTextField({
     required TextEditingController controller,

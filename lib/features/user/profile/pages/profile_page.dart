@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../auth/login/pages/login_page.dart';
 import '../../../../core/providers/profile_provider.dart';
 import '../../../../core/utils/constant/app_colors.dart';
+import '../../../../core/models/distress_classification.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -30,8 +31,11 @@ class _ProfilePageState extends State<ProfilePage> {
     final profile = profileProvider.profile;
     final isLoading = profileProvider.isLoading;
 
-    final nickname = profile?.nickname ?? 'Memuat...';
-
+    final nickname = profile?.nickname ?? 'Null';
+    final phoneNumber = profile?.phoneNumber ?? '-';
+    final moodScore = profile?.moodScore ?? 0;
+    final gender = profile?.gender ?? 'Null';
+    final statusLevel = DistressLevelExtension.fromMoodScore(moodScore).label;
     return Scaffold(
       backgroundColor: AppColors.netralLight,
       appBar: AppBar(
@@ -83,12 +87,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
                         const SizedBox(height: 20),
 
-                        Row(
+                        Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
-                            ProfileStat(title: 'Mood Streak', value: '12 Days'),
-                            ProfileStat(title: 'Journal', value: '48 Notes'),
-                            ProfileStat(title: 'Meditation', value: '16 Hours'),
+                          children: [
+                            ProfileStat(title: 'No. HP', value: phoneNumber),
+                            ProfileStat(title: 'Status', value: statusLevel),
+                            ProfileStat(title: 'Gender', value: gender),
                           ],
                         ),
                       ],
@@ -141,7 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
       borderRadius: BorderRadius.circular(24),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.04),
+          color: Colors.black.withValues(alpha: 0.04),
           blurRadius: 10,
           offset: const Offset(0, 4),
         ),
@@ -158,17 +162,18 @@ class ProfileStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          value,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-
-        const SizedBox(height: 6),
-
-        Text(title, style: TextStyle(color: Colors.grey.shade600)),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title, style: TextStyle(color: Colors.grey.shade600)),
+          Text(
+            value,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
     );
   }
 }
