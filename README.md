@@ -140,6 +140,7 @@ Before you begin, ensure you have:
     assets:
       - .env
       - assets/navbar/
+      - assets/images/
     ```
 
 ### Run the App
