@@ -256,7 +256,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: Image.asset(
                         'assets/images/robot.png',
-                        width: 42,
+                        width: 42, 
                         height: 42,
                       ),
                     ),

@@ -29,7 +29,7 @@ class App extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Noresah',
+        title: 'UBMentalCare',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
             seedColor: AppColors.primary,
