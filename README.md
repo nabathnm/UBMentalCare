@@ -128,7 +128,7 @@ Before you begin, ensure you have:
     cd noresah
     ```
 
-2.  Create a `.env` file in the root directory of the project:
+2.  Create a `.env` file or copy `cp .env.example .env` in the root directory of the project:
     ```env
     API_URL = http://localhost:8000
     SUPABASE_URL = https://xxwvcopcxfsskwfntjmu.supabase.co
