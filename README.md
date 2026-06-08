@@ -117,8 +117,6 @@ lib/
 
 Before you begin, ensure you have:
 1.  [Flutter SDK](https://docs.flutter.dev/get-started/install) installed (matching environment sdk `^3.11.5`).
-2.  A [Supabase](https://supabase.com) project set up with the corresponding database schemas.
-3.  A [Google AI Studio](https://aistudio.google.com/) Gemini API key.
 
 ### Configuration
 
