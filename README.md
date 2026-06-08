@@ -14,7 +14,7 @@ Built using a clean, modular feature-first architecture, Noresah leverages **Sup
 *   **Session Security:** Handled seamlessly and securely through Supabase Auth.
 *   **Onboarding Flow:** Dynamic onboarding questionnaires for students to set up their profile preferences and mental health baseline.
 
-### 🤖 ResahAI (Empathetic AI Chatbot)
+### 🤖 UBMentalCareAI (Empathetic AI Chatbot)
 *   **Initial Mitigation:** Conversational support acts as the first line of defense for students experiencing anxiety, stress, or panic.
 *   **Distress Level Detection:** The AI automatically analyzes the tone and sentiment of the conversation to categorize the user's distress level into four tiers: **Aman (Safe)**, **Waspada (Alert)**, **Khawatir (Anxious)**, and **Kritis (Critical)**.
 *   **Conversation History:** Easily access, view, and continue past interactions with ResahAI.
