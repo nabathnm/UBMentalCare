@@ -1,6 +1,6 @@
 # UBMentalCare
 
-Noresah (UBMentalCare) is a Flutter-based mobile application designed as a comprehensive digital platform to support student mental health at Universitas Brawijaya (UB). The application connects students with psychological experts from LKM UB (Layanan Konseling Mahasiswa) and provides initial mitigation and coping strategies for psychological distress through an AI-powered chatbot called **ResahAI**.
+Noresah (UBMentalCare) is a Flutter-based mobile application designed as a comprehensive digital platform to support student mental health at Universitas Brawijaya (UB). The application connects students with psychological experts from LKM UB (Layanan Konseling Mahasiswa) and provides initial mitigation and coping strategies for psychological distress through an AI-powered chatbot called **UBMentalCareAI**.
 
 Built using a clean, modular feature-first architecture, Noresah leverages **Supabase** for secure authentication and backend database management, and **Google Generative AI (Gemini)** to drive its empathetic conversational agent.
 
@@ -130,9 +130,9 @@ Before you begin, ensure you have:
 
 2.  Create a `.env` file in the root directory of the project:
     ```env
-    SUPABASE_URL=your_supabase_project_url
-    SUPABASE_KEY=your_supabase_anon_key
-    GEMINI_API_KEY=your_google_gemini_api_key
+    API_URL = http://localhost:8000
+    SUPABASE_URL = https://xxwvcopcxfsskwfntjmu.supabase.co
+    SUPABASE_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4d3Zjb3BjeGZzc2t3Zm50am11Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMDcyMTUsImV4cCI6MjA5NDU4MzIxNX0.iyHB-EmPvUbTFcqyXKntORTwWGAYw7O554u1-tCQVpw
     ```
 
 3.  Ensure `.env` is loaded in your `pubspec.yaml` assets section:
@@ -140,6 +140,7 @@ Before you begin, ensure you have:
     assets:
       - .env
       - assets/navbar/
+      - assets/images/
     ```
 
 ### Run the App
