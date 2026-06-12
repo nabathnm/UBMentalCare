@@ -33,9 +33,6 @@ class _LoginPageState extends State<LoginPage> {
         throw Exception(
           'Email harus menggunakan domain UB (@student.ub.ac.id atau @psychologist.ub.ac.id)',
         );
-        throw Exception(
-          'Email harus menggunakan domain UB (@student.ub.ac.id atau @psychologist.ub.ac.id)',
-        );
       }
 
       await Supabase.instance.client.auth.signInWithPassword(
@@ -81,8 +78,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return Scaffold(
       backgroundColor: const Color(0xFFF0F0F5),
       body: SingleChildScrollView(
@@ -214,24 +209,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _domainChip(String label) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        color: const Color(0xFFEFEFFA),
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Text(
-        label,
-        style: const TextStyle(
-          fontSize: 11,
-          color: Color(0xFF534AB7),
-          fontWeight: FontWeight.w500,
         ),
       ),
     );
