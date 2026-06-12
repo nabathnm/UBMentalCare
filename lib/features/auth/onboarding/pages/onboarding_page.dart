@@ -178,7 +178,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(primary: Color(0xFF3D8BFF)),
+            colorScheme: ColorScheme.light(primary: AppColors.primary),
           ),
           child: child!,
         );
@@ -372,8 +372,8 @@ class _ProfilePage extends StatelessWidget {
                   child: _GenderCard(
                     label: 'Laki-laki',
                     icon: Icons.male_rounded,
-                    isSelected: gender == 'male',
-                    onTap: () => onGenderChanged('male'),
+                    isSelected: gender == 'Laki-laki',
+                    onTap: () => onGenderChanged('Laki-laki'),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -381,8 +381,8 @@ class _ProfilePage extends StatelessWidget {
                   child: _GenderCard(
                     label: 'Perempuan',
                     icon: Icons.female_rounded,
-                    isSelected: gender == 'female',
-                    onTap: () => onGenderChanged('female'),
+                    isSelected: gender == 'Perempuan',
+                    onTap: () => onGenderChanged('Perempuan'),
                   ),
                 ),
               ],
@@ -403,7 +403,7 @@ class _ProfilePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(
                     color: birthDate != null
-                        ? const Color(0xFF3D8BFF)
+                        ? AppColors.primary
                         : Colors.grey.shade300,
                   ),
                 ),
@@ -414,7 +414,7 @@ class _ProfilePage extends StatelessWidget {
                       Icons.calendar_today_rounded,
                       size: 18,
                       color: birthDate != null
-                          ? const Color(0xFF3D8BFF)
+                          ? AppColors.primary
                           : Colors.grey.shade400,
                     ),
                     const SizedBox(width: 10),
@@ -494,7 +494,7 @@ class _ProblemPage extends StatelessWidget {
           children: [
             const _ProgressPill(filled: 3, total: 3),
             _BackButton(onTap: onBack),
-            const Spacer(flex: 1),
+            const SizedBox(height: 24),
 
             const Text(
               'Apa yang membuat kamu\nmencoba aplikasi ini?',
@@ -558,7 +558,7 @@ class _ProblemPage extends StatelessWidget {
                           vertical: 10,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF3D8BFF),
+                          color: AppColors.primary,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Text(
@@ -602,7 +602,7 @@ class _ProblemPage extends StatelessWidget {
                           vertical: 10,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF3D8BFF),
+                          color: AppColors.primary,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Text(
@@ -619,71 +619,67 @@ class _ProblemPage extends StatelessWidget {
               )
             else
               Expanded(
-                child: SingleChildScrollView(
-                  child: Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    alignment: WrapAlignment.center,
-                    children: availablePreferences.map((pref) {
-                      final isSelected = selectedIds.contains(pref.id);
-                      return GestureDetector(
-                        onTap: () => onToggle(pref.id),
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 14,
-                          ),
-                          decoration: BoxDecoration(
+                child: GridView.builder(
+                  padding: EdgeInsets.zero,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    mainAxisExtent: 54,
+                  ),
+                  itemCount: availablePreferences.length,
+                  itemBuilder: (context, index) {
+                    final pref = availablePreferences[index];
+                    final isSelected = selectedIds.contains(pref.id);
+                    return GestureDetector(
+                      onTap: () => onToggle(pref.id),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        decoration: BoxDecoration(
+                          color: isSelected ? AppColors.primary : Colors.white,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
                             color: isSelected
-                                ? const Color(0xFF3D8BFF)
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(14),
-                            border: Border.all(
-                              color: isSelected
-                                  ? const Color(0xFF3D8BFF)
-                                  : Colors.grey.shade300,
-                              width: 1.5,
-                            ),
-                            boxShadow: isSelected
-                                ? [
-                                    BoxShadow(
-                                      color: const Color(
-                                        0xFF3D8BFF,
-                                      ).withValues(alpha: 0.3),
-                                      blurRadius: 8,
-                                      offset: const Offset(0, 2),
-                                    ),
-                                  ]
-                                : null,
+                                ? AppColors.primary
+                                : Colors.grey.shade300,
+                            width: 1.5,
                           ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (isSelected) ...[
-                                const Icon(
-                                  Icons.check_circle_rounded,
-                                  color: Colors.white,
-                                  size: 18,
-                                ),
-                                const SizedBox(width: 6),
-                              ],
-                              Text(
+                          boxShadow: isSelected
+                              ? [
+                                  BoxShadow(
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.3,
+                                    ),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ]
+                              : null,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Text(
                                 pref.name,
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.w500,
                                   color: isSelected
                                       ? Colors.white
                                       : Colors.black87,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      );
-                    }).toList(),
-                  ),
+                      ),
+                    );
+                  },
                 ),
               ),
 
@@ -736,10 +732,10 @@ class _GenderCard extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF3D8BFF) : Colors.white,
+          color: isSelected ? AppColors.primary : Colors.white,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: isSelected ? const Color(0xFF3D8BFF) : Colors.grey.shade300,
+            color: isSelected ? AppColors.primary : Colors.grey.shade300,
             width: 1.5,
           ),
         ),
@@ -901,7 +897,7 @@ class _MascotImage extends StatelessWidget {
             color: AppColors.primaryLight,
             shape: BoxShape.circle,
           ),
-          child: Icon(_fallbackIcon, size: 48, color: const Color(0xFF3D8BFF)),
+          child: Icon(_fallbackIcon, size: 48, color: AppColors.primary),
         ),
       ),
     );
