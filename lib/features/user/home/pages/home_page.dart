@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.redNormal.withOpacity(0.3),
+                      color: AppColors.redNormal.withValues(alpha: 0.3),
                       blurRadius: 15,
                       offset: const Offset(0, 6),
                     ),
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withValues(alpha: 0.2),
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(
@@ -187,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                 gradient: AppColors.heroGradient,
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primary.withOpacity(0.3),
+                    color: AppColors.primary.withValues(alpha: 0.3),
                     blurRadius: 20,
                     offset: const Offset(0, 8),
                   ),
@@ -235,11 +235,11 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(24),
                   border: Border.all(
-                    color: AppColors.primary.withOpacity(0.15),
+                    color: AppColors.primary.withValues(alpha: 0.15),
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.04),
+                      color: Colors.black.withValues(alpha: 0.04),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -254,10 +254,10 @@ class _HomePageState extends State<HomePage> {
                         gradient: AppColors.primaryGradient,
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: const Icon(
-                        Icons.psychology_rounded,
-                        color: Colors.white,
-                        size: 28,
+                      child: Image.asset(
+                        'assets/images/robot.png',
+                        width: 42,
+                        height: 42,
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -345,11 +345,11 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(24),
                   border: Border.all(
-                    color: _getLevelColor(currentLevel).withOpacity(0.3),
+                    color: _getLevelColor(currentLevel).withValues(alpha: 0.3),
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.04),
+                      color: Colors.black.withValues(alpha: 0.04),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -380,7 +380,9 @@ class _HomePageState extends State<HomePage> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: _getLevelColor(currentLevel).withOpacity(0.1),
+                        color: _getLevelColor(
+                          currentLevel,
+                        ).withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Column(
@@ -518,7 +520,7 @@ class _HomePageState extends State<HomePage> {
       borderRadius: BorderRadius.circular(24),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.04),
+          color: Colors.black.withValues(alpha: 0.04),
           blurRadius: 10,
           offset: const Offset(0, 4),
         ),
@@ -648,7 +650,7 @@ class _MoodItem extends StatelessWidget {
             CircleAvatar(
               radius: 28,
               backgroundColor: isSelected
-                  ? AppColors.primary.withOpacity(0.15)
+                  ? AppColors.primary.withValues(alpha: 0.15)
                   : Colors.grey.shade100,
               child: Text(emoji, style: const TextStyle(fontSize: 28)),
             ),
@@ -693,7 +695,7 @@ class _FeatureCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.04),
+              color: Colors.black.withValues(alpha: 0.04),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -705,7 +707,7 @@ class _FeatureCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
+                color: color.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(icon, size: 24, color: color),

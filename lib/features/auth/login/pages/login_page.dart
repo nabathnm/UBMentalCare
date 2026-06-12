@@ -33,6 +33,9 @@ class _LoginPageState extends State<LoginPage> {
         throw Exception(
           'Email harus menggunakan domain UB (@student.ub.ac.id atau @psychologist.ub.ac.id)',
         );
+        throw Exception(
+          'Email harus menggunakan domain UB (@student.ub.ac.id atau @psychologist.ub.ac.id)',
+        );
       }
 
       await Supabase.instance.client.auth.signInWithPassword(

@@ -1,4 +1,4 @@
-# Noresah (UBMentalCare)
+# UBMentalCare
 
 Noresah (UBMentalCare) is a Flutter-based mobile application designed as a comprehensive digital platform to support student mental health at Universitas Brawijaya (UB). The application connects students with psychological experts from LKM UB (Layanan Konseling Mahasiswa) and provides initial mitigation and coping strategies for psychological distress through an AI-powered chatbot called **ResahAI**.
 

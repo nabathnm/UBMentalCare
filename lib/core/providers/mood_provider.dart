@@ -38,18 +38,15 @@ class MoodProvider with ChangeNotifier {
       );
 
       // Upsert: jika sudah ada mood hari ini, update
-      await _supabase.from('mood_entries').upsert(
-        entry.toJson(),
-        onConflict: 'user_id,date',
-      );
+      await _supabase
+          .from('mood_entries')
+          .upsert(entry.toJson(), onConflict: 'user_id,date');
 
       _todayMood = entry;
       notifyListeners();
 
       // Notify caller to update profile score
-      if (difference != 0) {
-        onScoreChanged(difference);
-      }
+      onScoreChanged(difference);
     } catch (e) {
       debugPrint('Error saving mood: $e');
       // Simpan secara lokal jika Supabase gagal
