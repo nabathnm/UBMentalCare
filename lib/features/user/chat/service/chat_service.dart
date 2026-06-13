@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:http/http.dart' as http;
 import '../../../../core/models/distress_classification.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// System prompt sesuai SKILL.md — ResahAI persona dalam Bahasa Indonesia.
 const String _systemPrompt = '''
@@ -67,11 +68,13 @@ const List<String> _emergencyKeywords = [
 ];
 
 class ChatService {
-  late GenerativeModel _geminiModel;
-  late ChatSession _geminiSession;
+  GenerativeModel? _geminiModel;
+  ChatSession? _geminiSession;
 
   // Groq chat history untuk multi-turn conversation
   final List<Map<String, String>> _groqHistory = [];
+
+  bool _isInitialized = false;
 
   // Callback untuk klasifikasi yang terdeteksi
   void Function(DistressLevel level)? onClassificationDetected;
@@ -79,21 +82,41 @@ class ChatService {
   // Callback untuk deteksi darurat
   void Function()? onEmergencyDetected;
 
-  ChatService() {
-    _initializeGemini();
-  }
+  ChatService();
 
-  void _initializeGemini() {
-    final apiKey = dotenv.env['GEMINI_KEY'];
-    if (apiKey == null) throw Exception('GEMINI_KEY is not defined in .env');
+  Future<void> _initializeGemini() async {
+    // Jika sudah diinisialisasi, lewati
+    if (_isInitialized) return;
 
-    _geminiModel = GenerativeModel(
-      model: 'gemini-2.5-flash',
-      apiKey: apiKey,
-      systemInstruction: Content.text(_systemPrompt),
-    );
+    try {
+      String? apiKey;
+      
+      try {
+        // Coba ambil dari edge function 'get-gemini-key'
+        final response = await Supabase.instance.client.functions.invoke('get-gemini-key');
+        apiKey = response.data['key'] as String?;
+      } catch (e) {
+        // Jika gagal (belum di-deploy), gunakan fallback ke local .env
+        print("Failed to fetch key from Edge Function, falling back to local .env: $e");
+        apiKey = dotenv.env['GEMINI_KEY'];
+      }
 
-    _geminiSession = _geminiModel.startChat();
+      if (apiKey == null || apiKey.isEmpty) {
+        throw Exception('GEMINI_KEY is not available either from edge function or .env');
+      }
+
+      _geminiModel = GenerativeModel(
+        model: 'gemini-2.5-flash',
+        apiKey: apiKey,
+        systemInstruction: Content.text(_systemPrompt),
+      );
+
+      _geminiSession = _geminiModel!.startChat();
+      _isInitialized = true;
+    } catch (e) {
+      print('Failed to initialize Gemini: $e');
+      // Jangan re-throw agar tidak crash, biarkan fallback bekerja
+    }
   }
 
   // ── Deteksi Darurat ────────────────────────────────────────
@@ -132,7 +155,8 @@ class ChatService {
   // ── Gemini ──────────────────────────────────────────────────
 
   Future<String?> _sendViaGemini(String message) async {
-    final response = await _geminiSession.sendMessage(Content.text(message));
+    if (_geminiSession == null) throw Exception("Gemini session is null");
+    final response = await _geminiSession!.sendMessage(Content.text(message));
     return response.text;
   }
 
@@ -182,6 +206,9 @@ class ChatService {
   // ── Public API ───────────────────────────────────────────────
 
   Future<String?> sendMessage(String message) async {
+    // Pastikan AI sudah diinisialisasi dengan key dari server (atau fallback .env)
+    await _initializeGemini();
+
     // Cek kata kunci darurat terlebih dahulu
     if (containsEmergencyKeywords(message)) {
       onEmergencyDetected?.call();
@@ -193,13 +220,15 @@ class ChatService {
     try {
       rawReply = await _sendViaGroq(message);
       if (rawReply == null || rawReply.isEmpty) {
-        throw Exception('Empty response from Gemini');
+        throw Exception('Empty response from Groq');
       }
     } catch (groqError) {
+      print('Groq Error: $groqError');
       // Fallback ke gemini
       try {
         rawReply = await _sendViaGemini(message);
       } catch (geminiError) {
+        print('Gemini Error: $geminiError');
         return 'Maaf, layanan sedang tidak tersedia. Silakan coba beberapa saat lagi.';
       }
     }

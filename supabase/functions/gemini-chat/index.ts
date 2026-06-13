@@ -34,7 +34,7 @@ serve(async (req) => {
 
     // 4. Lakukan request ke Google Gemini API (Menggunakan model Gemini 1.5 Flash yang lebih cepat & murah)
     const geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`;
-    
+
     const geminiResponse = await fetch(geminiApiUrl, {
       method: 'POST',
       headers: {
@@ -56,14 +56,14 @@ serve(async (req) => {
     }
 
     const data = await geminiResponse.json();
-    
+
     // Ambil hasil teks balasan dari Gemini
     const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
     // 5. Kembalikan hasilnya ke aplikasi Flutter
     return new Response(
       JSON.stringify({ result: textResponse }),
-      { 
+      {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
       },
@@ -72,7 +72,7 @@ serve(async (req) => {
     // Tangkap dan kembalikan error jika terjadi kesalahan
     return new Response(
       JSON.stringify({ error: error.message }),
-      { 
+      {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 400,
       },
