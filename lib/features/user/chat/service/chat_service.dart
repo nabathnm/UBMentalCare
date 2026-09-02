@@ -106,7 +106,7 @@ class ChatService {
       }
 
       _geminiModel = GenerativeModel(
-        model: 'gemini-2.5-flash',
+        model: 'gemini-3.6-flash',
         apiKey: apiKey,
         systemInstruction: Content.text(_systemPrompt),
       );
